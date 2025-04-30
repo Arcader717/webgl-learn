@@ -1,4 +1,4 @@
-// import { makeProgram } from "./boilerplate.js";
+import { makeProgram } from "/scripts/boilerplate.js";
 // import { setGeometry } from "./buffers.js";
 
 const vShader = `
