@@ -1,10 +1,10 @@
 import { makeProgram } from "./boilerplate.js";
-// import { setGeometry } from "./buffers.js";
+import { setGeometry } from "./buffers.js";
 
 const vShader = `
     attribute vec2 a_position;
     uniform vec2 u_resolution;
-    uniform vec2 u_translation;;
+    uniform vec2 u_translation;
     void main() {
         vec2 position = a_position + u_translation;
         vec2 zeroToOne = position / u_resolution;
