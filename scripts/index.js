@@ -65,7 +65,6 @@ function main() {
         if (e.key == "r") {
             translation = [randomNumber(0, gl.canvas.width), randomNumber(0, gl.canvas.height)];
             color = [Math.random(), Math.random(), Math.random(), 1];
-            rotation = deg2Rot(randomNumber(0,359));
             drawScene();
         }
     }
@@ -87,7 +86,7 @@ function main() {
         gl.uniform2f(resolutionLocation, gl.canvas.width, gl.canvas.height);
         gl.uniform4fv(colorLocation, color);
         gl.uniform2fv(translationLocation, translation);
-        gl.uniform2fv(rotationLocation, rotation);
+        // gl.uniform2fv(rotationLocation, rotation);
 
         var primitiveType = gl.TRIANGLES;
         var offset = 0;
