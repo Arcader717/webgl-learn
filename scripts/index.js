@@ -45,7 +45,7 @@ function main() {
     var resolutionLocation = gl.getUniformLocation(program, "u_resolution");
     var colorLocation = gl.getUniformLocation(program, "u_color");
     var translationLocation = gl.getUniformLocation(program, "u_translation");
-    var rotationlocation = gl.getUniformLocation(program, "u_rotation");
+    var rotationLocation = gl.getUniformLocation(program, "u_rotation");
 
     var positionBuffer = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
