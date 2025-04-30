@@ -1,4 +1,4 @@
-import { makeProgram } from "/scripts/boilerplate.js";
+import { makeProgram } from "./boilerplate.js";
 // import { setGeometry } from "./buffers.js";
 
 const vShader = `
@@ -29,5 +29,6 @@ function main() {
     if (!gl) {
         alert("Wah wah, no WebGL for you loser")
     }
-    // var program = makeProgram
+    var program = makeProgram(gl, [vShader, fShader]);
+    console.log(program);
 }
