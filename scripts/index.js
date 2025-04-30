@@ -63,7 +63,7 @@ function main() {
         if (e.key == "r") {
             translation = [randomNumber(0, gl.canvas.width), randomNumber(0, gl.canvas.height)];
             color = [Math.random(), Math.random(), Math.random(), 1];
-            rotation = [randomNumber(0, 360), 1];
+            rotation = deg2rot(randomNumber(0,359));
             drawScene();
         }
     }
@@ -96,4 +96,9 @@ function main() {
 
 function randomNumber(min, max) {
     return Math.random() * (max - min) + min;
+}
+
+function deg2Rot(angle) {
+    var angleRad = angle * Math.PI / 180;
+    return [Math.sin(angleRad), Math.cos(angleRad)];
 }
