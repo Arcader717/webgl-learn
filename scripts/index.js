@@ -31,4 +31,11 @@ function main() {
     }
     var program = makeProgram(gl, [vShader, fShader]);
     console.log(program);
+    var positionLocation = gl.getAttribLocation(program, "a_position");
+    var resolutionLocation = gl.getUniformLocation(program, "u_resolution");
+    var colorLocation = gl.getUniformLocation(program, "u_color");
+    var positionBuffer = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positions);
+    webglUtils.resizeCanvasToDisplaySize(gl.canvas);
 }
