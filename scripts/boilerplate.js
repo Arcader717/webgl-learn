@@ -4,7 +4,7 @@ function compileShader(gl, shaderSource, shaderType) {
   gl.compileShader(shader);
   var success = gl.getShaderParameter(shader, gl.COMPILE_STATUS);
   if (!success) {
-    throw ("Couldn't compile shader: " + gl.getShaderInfoLog(shader);
+    throw ("Couldn't compile shader: " + gl.getShaderInfoLog(shader));
   }
   return shader;
 };
