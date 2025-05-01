@@ -48,15 +48,17 @@ function main() {
     var colorLocation = gl.getUniformLocation(program, "u_color");
     var translationLocation = gl.getUniformLocation(program, "u_translation");
     var rotationLocation = gl.getUniformLocation(program, "u_rotation");
+    var scaleLocation = gl.getUniformLocation(program, "u_scale");
 
     var positionBuffer = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
     setGeometry(gl);
 
     var translation = [randomNumber(0, gl.canvas.width), randomNumber(0, gl.canvas.height)];
-    var rotation = [0, 1]
+    var rotation = [0, 1];
+    var scale = [1, 1];
     var color = [Math.random(), Math.random(), Math.random(), 1];
-
+    
     drawScene();
 
     window.addEventListener("keydown", resetF);
@@ -86,7 +88,7 @@ function main() {
         gl.uniform2f(resolutionLocation, gl.canvas.width, gl.canvas.height);
         gl.uniform4fv(colorLocation, color);
         gl.uniform2fv(translationLocation, translation);
-        // gl.uniform2fv(rotationLocation, rotation);
+        gl.uniform2fv(rotationLocation, rotation);
 
         var primitiveType = gl.TRIANGLES;
         var offset = 0;
