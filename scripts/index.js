@@ -89,6 +89,7 @@ function main() {
         gl.uniform4fv(colorLocation, color);
         gl.uniform2fv(translationLocation, translation);
         gl.uniform2fv(rotationLocation, rotation);
+        gl.uniform2fv(scaleLocation, scale);
 
         var primitiveType = gl.TRIANGLES;
         var offset = 0;
