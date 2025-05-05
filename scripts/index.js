@@ -64,10 +64,19 @@ function main() {
     function resetF(e) {
         if (e.key == "r") {
             translation = [randomNumber(0, gl.canvas.width), randomNumber(0, gl.canvas.height)];
+            var angle = randomNumber(0, 360);
+            angleRads = angle * Math.PI / 180;
+            rotation = [Math.sin(angleRads), Math.cos(angleRads)];
             color = [Math.random(), Math.random(), Math.random(), 1];
             drawScene();
             console.clear();
             console.log("Position - " + translation[0] + ", " + translation[1]);
+            console.log("----------");
+            console.log("Angle - " + angle);
+            console.log("Radians - " + angleRads); 
+            console.log("Sine - " + rotation[0]);
+            console.log("Cosine - " + rotation[1]);
+            console.log("----------");
             console.log("Color - " + color[0] + ", " + color[1] + ", " + color[2]);
         }
     }
@@ -100,7 +109,7 @@ function main() {
 }
 
 function randomNumber(min, max) {
-    return Math.random() * (max - min) + min;
+    return Math.round(Math.random() * (max - min) + min);
 }
 
 /*
