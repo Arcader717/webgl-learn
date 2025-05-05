@@ -10,12 +10,7 @@ const vShader = `
     uniform vec2 u_rotation;
     uniform vec2 u_scale;
     void main() {
-        vec2 scaledPosition = a_position * u_scale;
-        vec2 rotatedPosition = vec2(
-            scaledPosition.x * u_rotation.y + scaledPosition.y * u_rotation.x,
-            scaledPosition.x * u_rotation.y - scaledPosition.y * u_rotation.x);
-    
-        vec2 position = rotatedPosition + u_translation;
+        vec2 position = a_position + u_translation;
         vec2 zeroToOne = position / u_resolution;
         vec2 zeroToTwo = zeroToOne * 2.0;
         vec2 clipSpace = zeroToTwo - 1.0;
@@ -47,16 +42,16 @@ function main() {
     var resolutionLocation = gl.getUniformLocation(program, "u_resolution");
     var colorLocation = gl.getUniformLocation(program, "u_color");
     var translationLocation = gl.getUniformLocation(program, "u_translation");
-    var rotationLocation = gl.getUniformLocation(program, "u_rotation");
-    var scaleLocation = gl.getUniformLocation(program, "u_scale");
+    // var rotationLocation = gl.getUniformLocation(program, "u_rotation");
+    // var scaleLocation = gl.getUniformLocation(program, "u_scale");
 
     var positionBuffer = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
     setGeometry(gl);
 
     var translation = [randomNumber(0, gl.canvas.width), randomNumber(0, gl.canvas.height)];
-    var rotation = [0, 1];
-    var scale = [1, 1];
+    // var rotation = [0, 1];
+    // var scale = [1, 1];
     var color = [Math.random(), Math.random(), Math.random(), 1];
     
     drawScene();
@@ -88,8 +83,8 @@ function main() {
         gl.uniform2f(resolutionLocation, gl.canvas.width, gl.canvas.height);
         gl.uniform4fv(colorLocation, color);
         gl.uniform2fv(translationLocation, translation);
-        gl.uniform2fv(rotationLocation, rotation);
-        gl.uniform2fv(scaleLocation, scale);
+        // gl.uniform2fv(rotationLocation, rotation);
+        // gl.uniform2fv(scaleLocation, scale);
 
         var primitiveType = gl.TRIANGLES;
         var offset = 0;
@@ -102,7 +97,8 @@ function randomNumber(min, max) {
     return Math.random() * (max - min) + min;
 }
 
+/*
 function deg2Rot(angle) {
     var angleRad = angle * Math.PI / 180;
     return [Math.sin(angleRad), Math.cos(angleRad)];
-}
+} */
