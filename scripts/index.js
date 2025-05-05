@@ -100,12 +100,9 @@ function main() {
         var scaleM = m3.scaling(scale[0], scale[1]);
         var matrix = m3.multiply(transM, rotM);
         matrix = m3.multiply(matrix, scaleM)
-        gl.uniformMatrix3fv(matrix)
+        gl.uniformMatrix3fv(matrixLocation, false, matrix);
 
-        var primitiveType = gl.TRIANGLES;
-        var offset = 0;
-        var count = 18;
-        gl.drawArrays(primitiveType, offset, count);
+        gl.drawArrays(gl.TRIANGLES, 0, 18);
     }
 }
 
