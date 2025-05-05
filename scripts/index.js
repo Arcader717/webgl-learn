@@ -71,12 +71,12 @@ function main() {
             drawScene();
             console.clear();
             console.log("Position - " + translation[0] + ", " + translation[1]);
-            console.log("----------");
+            console.group("Rotation");
             console.log("Angle - " + angle);
             console.log("Radians - " + angleRads); 
             console.log("Sine - " + rotation[0]);
             console.log("Cosine - " + rotation[1]);
-            console.log("----------");
+            console.groupEnd();
             console.log("Color - " + color[0] + ", " + color[1] + ", " + color[2]);
         }
     }
