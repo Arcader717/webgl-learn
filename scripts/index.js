@@ -66,6 +66,9 @@ function main() {
             translation = [randomNumber(0, gl.canvas.width), randomNumber(0, gl.canvas.height)];
             color = [Math.random(), Math.random(), Math.random(), 1];
             drawScene();
+            console.clear();
+            console.log("Position - " + translation[0] + ", " + translation[1]);
+            console.log("Color - " + color[0] + ", " + color[1] + ", " + color[2]);
         }
     }
 
