@@ -10,9 +10,10 @@ const vShader = `
     uniform vec2 u_rotation;
     uniform vec2 u_scale;
     void main() {
+        vec2 scaled = a_position * u_scale;
         vec2 rotated = vec2(
-            a_position.x * u_rotation.y + a_position.y * u_rotation.x,
-            a_position.y * u_rotation.y - a_position.x * u_rotation.x);
+            scaled.x * u_rotation.y + scaled.y * u_rotation.x,
+            scaled.y * u_rotation.y - scaled.x * u_rotation.x);
         vec2 position = rotated + u_translation;
         vec2 zeroToOne = position / u_resolution;
         vec2 zeroToTwo = zeroToOne * 2.0;
@@ -46,7 +47,7 @@ function main() {
     var colorLocation = gl.getUniformLocation(program, "u_color");
     var translationLocation = gl.getUniformLocation(program, "u_translation");
     var rotationLocation = gl.getUniformLocation(program, "u_rotation");
-    // var scaleLocation = gl.getUniformLocation(program, "u_scale");
+    var scaleLocation = gl.getUniformLocation(program, "u_scale");
 
     var positionBuffer = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
@@ -54,7 +55,7 @@ function main() {
 
     var translation = [randomNumber(0, gl.canvas.width), randomNumber(0, gl.canvas.height)];
     var rotation = [0, 1];
-    // var scale = [1, 1];
+    var scale = [1, 1];
     var color = [Math.random(), Math.random(), Math.random(), 1];
     
     drawScene();
@@ -67,6 +68,7 @@ function main() {
             var angle = randomNumber(0, 360);
             var angleRads = angle * Math.PI / 180;
             rotation = [Math.sin(angleRads), Math.cos(angleRads)];
+            scale = [randomNumber(-5.01, 5.01), randomNumber(-5.01, 5.01)];
             color = [Math.random(), Math.random(), Math.random(), 1];
             drawScene();
             console.clear();
@@ -99,7 +101,7 @@ function main() {
         gl.uniform4fv(colorLocation, color);
         gl.uniform2fv(translationLocation, translation);
         gl.uniform2fv(rotationLocation, rotation);
-        // gl.uniform2fv(scaleLocation, scale);
+        gl.uniform2fv(scaleLocation, scale);
 
         var primitiveType = gl.TRIANGLES;
         var offset = 0;
