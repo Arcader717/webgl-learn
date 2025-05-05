@@ -41,16 +41,14 @@ function main() {
 
     var resolutionLocation = gl.getUniformLocation(program, "u_resolution");
     var colorLocation = gl.getUniformLocation(program, "u_color");
-    var translationLocation = gl.getUniformLocation(program, "u_translation");
-    var rotationLocation = gl.getUniformLocation(program, "u_rotation");
-    var scaleLocation = gl.getUniformLocation(program, "u_scale");
+    var matrixLocation = gl.getUniformLocation(program, "u_matrix");
 
     var positionBuffer = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
     setGeometry(gl);
 
     var translation = [randomNumber(0, gl.canvas.width), randomNumber(0, gl.canvas.height)];
-    var rotation = [0, 1];
+    var angle = 0;
     var scale = [1, 1];
     var color = [Math.random(), Math.random(), Math.random(), 1];
     
@@ -61,9 +59,7 @@ function main() {
     function resetF(e) {
         if (e.key == "r") {
             translation = [randomNumber(0, gl.canvas.width), randomNumber(0, gl.canvas.height)];
-            var angle = randomNumber(0, 360);
-            var angleRads = angle * Math.PI / 180;
-            rotation = [Math.sin(angleRads), Math.cos(angleRads)];
+            angle = randomNumber(0,360);
             scale = [randomNumber(-5.01, 5.01), randomNumber(-5.01, 5.01)];
             color = [Math.random(), Math.random(), Math.random(), 1];
             drawScene();
@@ -99,9 +95,12 @@ function main() {
         gl.vertexAttribPointer(positionLocation, size, type, normalize, stride, offset);
         gl.uniform2f(resolutionLocation, gl.canvas.width, gl.canvas.height);
         gl.uniform4fv(colorLocation, color);
-        gl.uniform2fv(translationLocation, translation);
-        gl.uniform2fv(rotationLocation, rotation);
-        gl.uniform2fv(scaleLocation, scale);
+        var transM = m3.translation(translation[0], translation[1]);
+        var rotM = m3.rotation(angle * Math.PI / 180);
+        var scaleM = m3.scaling(scale[0], scale[1]);
+        var matrix = m3.multiply(transM, rotM);
+        matrix = m3.multiply(matrix, scaleM)
+        gl.uniformMatrix3fv(matrix)
 
         var primitiveType = gl.TRIANGLES;
         var offset = 0;
