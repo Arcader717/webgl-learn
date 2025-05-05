@@ -10,6 +10,9 @@ const vShader = `
     uniform vec2 u_rotation;
     uniform vec2 u_scale;
     void main() {
+        vec2 rotated = vec2(
+            a_position.x * u_rotation.y + a_position.y * u_rotation.x,
+            a_position.y * u_rotation.y - a_position.x * u_rotation.x)
         vec2 position = a_position + u_translation;
         vec2 zeroToOne = position / u_resolution;
         vec2 zeroToTwo = zeroToOne * 2.0;
@@ -50,7 +53,7 @@ function main() {
     setGeometry(gl);
 
     var translation = [randomNumber(0, gl.canvas.width), randomNumber(0, gl.canvas.height)];
-    // var rotation = [0, 1];
+    var rotation = [0, 1];
     // var scale = [1, 1];
     var color = [Math.random(), Math.random(), Math.random(), 1];
     
@@ -83,7 +86,7 @@ function main() {
         gl.uniform2f(resolutionLocation, gl.canvas.width, gl.canvas.height);
         gl.uniform4fv(colorLocation, color);
         gl.uniform2fv(translationLocation, translation);
-        // gl.uniform2fv(rotationLocation, rotation);
+        gl.uniform2fv(rotationLocation, rotation);
         // gl.uniform2fv(scaleLocation, scale);
 
         var primitiveType = gl.TRIANGLES;
