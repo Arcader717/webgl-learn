@@ -65,7 +65,7 @@ function main() {
         if (e.key == "r") {
             translation = [randomNumber(0, gl.canvas.width), randomNumber(0, gl.canvas.height)];
             var angle = randomNumber(0, 360);
-            angleRads = angle * Math.PI / 180;
+            var angleRads = angle * Math.PI / 180;
             rotation = [Math.sin(angleRads), Math.cos(angleRads)];
             color = [Math.random(), Math.random(), Math.random(), 1];
             drawScene();
