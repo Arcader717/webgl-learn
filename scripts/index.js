@@ -54,29 +54,73 @@ function main() {
     
     drawScene();
 
-    window.addEventListener("keydown", resetF);
-    
-    function resetF(e) {
+    window.addEventListener("keydown", keydownC);
+
+    function keydownCon(e) {
         if (e.key == "r") {
-            translation = [randomNumber(0, gl.canvas.width), randomNumber(0, gl.canvas.height)];
-            angle = randomNumber(0,360);
-            scale = [randomNumber(-5.01, 5.01), randomNumber(-5.01, 5.01)];
-            color = [Math.random(), Math.random(), Math.random(), 1];
-            drawScene();
-            console.clear();
-            console.log("Position - " + translation[0] + ", " + translation[1]);
-            console.groupCollapsed("Rotation");
-            console.log("Angle - " + angle);
-            console.log("Radians - " + angleRads); 
-            console.log("Sine - " + rotation[0]);
-            console.log("Cosine - " + rotation[1]);
-            console.groupEnd();
-            console.groupCollapsed("Scale");
-            console.log("Scale X - " + scale[0]);
-            console.log("Scale Y - " + scale[1]);
-            console.groupEnd();
-            console.log("Color - " + color[0] + ", " + color[1] + ", " + color[2]);
+            resetF();  
+        } else if (e.key == "t") {
+            promptTranslation();
         }
+    }
+    
+    function resetF() {
+        translation = [randomNumber(0, gl.canvas.width), randomNumber(0, gl.canvas.height)];
+        angle = randomNumber(0,360);
+        scale = [randomNumber(-5.01, 5.01), randomNumber(-5.01, 5.01)];
+        color = [Math.random(), Math.random(), Math.random(), 1];
+        drawScene();
+        console.clear();
+        console.log("Position - " + translation[0] + ", " + translation[1]);
+        console.groupCollapsed("Rotation");
+        console.log("Angle - " + angle);
+        console.log("Radians - " + angleRads); 
+        console.log("Sine - " + rotation[0]);
+        console.log("Cosine - " + rotation[1]);
+        console.groupEnd();
+        console.groupCollapsed("Scale");
+        console.log("Scale X - " + scale[0]);
+        console.log("Scale Y - " + scale[1]);
+        console.groupEnd();
+        console.log("Color - " + color[0] + ", " + color[1] + ", " + color[2]);
+    }
+    
+    function promptTranslation() {
+        var minx = -translation[0]
+        var maxx = gl.canvas.width - translation[0]
+        var miny = -translation[1]
+        var maxy = gl.canvas.height - translation[1]
+        var transx = window.prompt("Insert x translation (must be an integer)")
+        if (typeof transx !== typeof "") {
+            console.log("Translation x was not filled out");
+            return;
+        }
+        transx = Number(transx);
+        if (!Number.isInteger(transx)) {
+            console.log("Translation x was not an integer");
+            return;
+        };
+        if (minx <= transx <= maxx) {
+            console.log("Translation x would put it out of bounds. Acceptable range: " + minx + " - " + maxx);
+            return;
+        }
+        translation[0] = translation[0] + transx;
+        var transy = window.prompt("Insert y translation (must be an integer)")
+        if (typeof transy !== typeof "") {
+            console.log("Translation y was blank");
+            return;
+        }
+        transy = Number(transy);
+        if (!Number.isInteger(transy)) {
+            console.log("translation y was not an integer");
+            return;
+        }
+        if (miny <= transy <= maxy) {
+            console.log("That translation would put it out of bounds. Acceptable range: " + miny + " - " + maxy);
+            return;
+        }
+        translation[1] = translation[1] + transy;
+        drawScene()
     }
 
     function drawScene() {
