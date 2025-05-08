@@ -100,7 +100,7 @@ function main() {
             console.log("Translation x was not an integer");
             return;
         };
-        if (minx <= transx <= maxx) {
+        if (!(minx <= transx <= maxx)) {
             console.log("Translation x would put it out of bounds. Acceptable range: " + minx + " - " + maxx);
             return;
         }
