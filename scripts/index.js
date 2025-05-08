@@ -7,14 +7,10 @@ var color = [0, 0, 0, 1];
 const vShader = `
     attribute vec2 a_position;
     
-    uniform vec2 u_resolution;
     uniform mat3 u_matrix;
+
     void main() {
-        vec2 position = (u_matrix * vec3(a_position, 1)).xy;
-        vec2 zeroToOne = position / u_resolution;
-        vec2 zeroToTwo = zeroToOne * 2.0;
-        vec2 clipSpace = zeroToTwo - 1.0;
-        gl_Position = vec4(clipSpace * vec2(1, -1), 0, 1);
+        gl_Position = vec4((u_matrix * vec3(a_position, 1)).xy, 0, 1);
     }
 `;
 const fShader = `
@@ -139,11 +135,13 @@ function main() {
         gl.vertexAttribPointer(positionLocation, size, type, normalize, stride, offset);
         gl.uniform2f(resolutionLocation, gl.canvas.width, gl.canvas.height);
         gl.uniform4fv(colorLocation, color);
+        var projM = m3.projection(gl.canvas.clientWidth, gl.canvas.clientHeight)
         var transM = m3.translation(translation[0], translation[1]);
         var rotM = m3.rotation(angle * Math.PI / 180);
         var scaleM = m3.scaling(scale[0], scale[1]);
-        var matrix = m3.multiply(transM, rotM);
-        matrix = m3.multiply(matrix, scaleM)
+        var matrix = m3.multiply(projM, transM);
+        matrix = m3.multiply(matrix, rotM);
+        matrix = m3.multiply(matrix, scaleM);
         gl.uniformMatrix3fv(matrixLocation, false, matrix);
 
         gl.drawArrays(gl.TRIANGLES, 0, 18);
