@@ -90,7 +90,7 @@ function main() {
         var maxx = gl.canvas.width - translation[0]
         var miny = -translation[1]
         var maxy = gl.canvas.height - translation[1]
-        var transx = window.prompt("Insert x translation (must be an integer)")
+        var transx = window.prompt("Insert x translation (must be an integer)\nBetween " + minx + " - " + maxx)
         if (typeof transx !== typeof "") {
             console.log("Translation x was not filled out");
             return;
@@ -105,7 +105,7 @@ function main() {
             return;
         }
         translation[0] = translation[0] + transx;
-        var transy = window.prompt("Insert y translation (must be an integer)")
+        var transy = window.prompt("Insert y translation (must be an integer)\nBetween " + miny + " - " + maxy);
         if (typeof transy !== typeof "") {
             console.log("Translation y was blank");
             return;
