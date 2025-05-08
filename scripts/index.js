@@ -54,7 +54,7 @@ function main() {
     
     drawScene();
 
-    window.addEventListener("keydown", keydownC);
+    window.addEventListener("keydown", keydownCon);
 
     function keydownCon(e) {
         if (e.key == "r") {
