@@ -5,7 +5,7 @@ var m3 = {
       0, -2/height, 0,
       -1, 1, 1
     ];
-  }
+  },
   
   translation: function(tx, ty) {
     return [
