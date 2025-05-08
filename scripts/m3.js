@@ -6,6 +6,18 @@ var m3 = {
       -1, 1, 1
     ];
   },
+
+  translate: function(m, tx, ty) {
+    return m3.multiply(m, m3.translation(tx, ty));
+  },
+
+  rotate: function(m, angleRads) {
+    return m3.multiply(m, m3.rotation(angleRads));
+  },
+
+  scale: function(m, sx, sy) {
+    return m3.multiply(m, m3.scaling(sx, sy));
+  },
   
   translation: function(tx, ty) {
     return [
