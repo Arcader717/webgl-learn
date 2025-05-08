@@ -8,7 +8,7 @@ const vShader = `
     attribute vec2 a_position;
     
     uniform vec2 u_resolution;
-    uniform vec3 u_matrix;
+    uniform mat3 u_matrix;
     void main() {
         vec2 position = (u_matrix * vec3(a_position, 1)).xy;
         vec2 zeroToOne = position / u_resolution;
