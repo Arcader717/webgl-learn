@@ -73,7 +73,6 @@ function main() {
         var stride = 0;
         var offset = 0;
         gl.vertexAttribPointer(positionLocation, size, type, normalize, stride, offset);
-        gl.uniform2f(resolutionLocation, gl.canvas.width, gl.canvas.height);
         gl.uniform4fv(colorLocation, color);
         var matrix = m4.projection(gl.canvas.clientWidth, gl.canvas.clientHeight, 400);
         matrix = m4.translate(matrix, translation[0], translation[1], translation[2]);
