@@ -1,6 +1,6 @@
 import { makeProgram } from "./boilerplate.js";
 import { setGeometry } from "./buffers.js";
-import { m3 } from "./m3.js";
+import { m4 } from "./matrix.js";
 
 var color = [0, 0, 0, 1];
 
@@ -35,7 +35,6 @@ function main() {
     
     var positionLocation = gl.getAttribLocation(program, "a_position");
 
-    var resolutionLocation = gl.getUniformLocation(program, "u_resolution");
     var colorLocation = gl.getUniformLocation(program, "u_color");
     var matrixLocation = gl.getUniformLocation(program, "u_matrix");
 
@@ -43,14 +42,14 @@ function main() {
     gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
     setGeometry(gl);
 
-    var translation = [randomNumber(0, gl.canvas.width), randomNumber(0, gl.canvas.height)];
-    var angle = 0;
-    var scale = [1, 1];
+    var translation = [45, 150, 0];
+    var angle = [40, 25, 325];
+    var scale = [1, 1, 1];
     var color = [Math.random(), Math.random(), Math.random(), 1];
     
     drawScene();
 
-    window.addEventListener("keydown", keydownCon);
+    /*window.addEventListener("keydown", keydownCon);
 
     function keydownCon(e) {
         if (e.key == "r") {
@@ -58,28 +57,7 @@ function main() {
         } else if (e.key == "t") {
             promptTranslation();
         }
-    }
-    
-    function resetF() {
-        translation = [randomNumber(0, gl.canvas.width), randomNumber(0, gl.canvas.height)];
-        angle = randomNumber(0,360);
-        scale = [randomNumber(-5.01, 5.01), randomNumber(-5.01, 5.01)];
-        color = [Math.random(), Math.random(), Math.random(), 1];
-        drawScene();
-        console.clear();
-        console.log("Position - " + translation[0] + ", " + translation[1]);
-        console.groupCollapsed("Rotation");
-        console.log("Angle - " + angle);
-        console.log("Radians - " + angleRads); 
-        console.log("Sine - " + rotation[0]);
-        console.log("Cosine - " + rotation[1]);
-        console.groupEnd();
-        console.groupCollapsed("Scale");
-        console.log("Scale X - " + scale[0]);
-        console.log("Scale Y - " + scale[1]);
-        console.groupEnd();
-        console.log("Color - " + color[0] + ", " + color[1] + ", " + color[2]);
-    }
+    }*/
 
     function drawScene() {
         webglUtils.resizeCanvasToDisplaySize(gl.canvas);
@@ -97,10 +75,12 @@ function main() {
         gl.vertexAttribPointer(positionLocation, size, type, normalize, stride, offset);
         gl.uniform2f(resolutionLocation, gl.canvas.width, gl.canvas.height);
         gl.uniform4fv(colorLocation, color);
-        var matrix = m3.projection(gl.canvas.clientWidth, gl.canvas.clientHeight);
-        matrix = m3.translate(matrix, translation[0], translation[1]);
-        matrix = m3.rotate(matrix, (angle * Math.PI/ 180));
-        matrix = m3.scale(matrix, scale[0], scale[1]);
+        var matrix = m4.projection(gl.canvas.clientWidth, gl.canvas.clientHeight, 400);
+        matrix = m4.translate(matrix, translation[0], translation[1], translation[2]);
+        matrix = m4.xRotate(matrix, angle[0]);
+        matrix = m4.yRotate(matrix, angle[1]);
+        matrix = m4.zRotate(matrix, angle[2]);
+        matrix = m4.scale(matrix, scale[0], scale[1], scale[2]);
         gl.uniformMatrix3fv(matrixLocation, false, matrix);
 
         gl.drawArrays(gl.TRIANGLES, 0, 18);
@@ -116,3 +96,22 @@ function deg2Rot(angle) {
     var angleRad = angle * Math.PI / 180;
     return [Math.sin(angleRad), Math.cos(angleRad)];
 } */
+
+function logValues(positions, rot, scale) { // ([x pos, y pos, z pos], [x rot, y rot, z rot], [x scale, y scale, z scale])
+    console.clear();
+    console.group("Position");
+    console.log("X - " + positions[0]);
+    console.log("Y - " + positions[1]);
+    console.log("Z - " + positions[2]);
+    console.groupEnd();
+    console.group("Rotation");
+    console.log("X - " + rot[0]);
+    console.log("Y - " + rot[1]);
+    console.log("Z - " + rot[2]);
+    console.groupEnd();
+    console.group("Scale");
+    console.log("X - " + scale[0]);
+    console.log("Y - " + scale[1]);
+    console.log("Z - " + scale[2]);
+    console.groupEnd();
+}
