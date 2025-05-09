@@ -84,6 +84,7 @@ function main() {
         gl.uniformMatrix3fv(matrixLocation, false, matrix);
 
         gl.drawArrays(gl.TRIANGLES, 0, 18);
+        logValues(translation, angle, scale);
     }
 }
 
@@ -114,4 +115,4 @@ function logValues(positions, rot, scale) { // ([x pos, y pos, z pos], [x rot, y
     console.log("Y - " + scale[1]);
     console.log("Z - " + scale[2]);
     console.groupEnd();
-}
+};
