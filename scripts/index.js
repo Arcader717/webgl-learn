@@ -5,9 +5,9 @@ import { m3 } from "./m3.js";
 var color = [0, 0, 0, 1];
 
 const vShader = `
-    attribute vec2 a_position;
+    attribute vec4 a_position;
     
-    uniform mat3 u_matrix;
+    uniform mat4 u_matrix;
 
     void main() {
         gl_Position = vec4((u_matrix * vec3(a_position, 1)).xy, 0, 1);
@@ -80,44 +80,6 @@ function main() {
         console.groupEnd();
         console.log("Color - " + color[0] + ", " + color[1] + ", " + color[2]);
     }
-    
-    function promptTranslation() {
-        var minx = -translation[0]
-        var maxx = gl.canvas.width - translation[0]
-        var miny = -translation[1]
-        var maxy = gl.canvas.height - translation[1]
-        var transx = window.prompt("Insert x translation (must be an integer)\nBetween " + minx + " - " + maxx)
-        if (typeof transx !== typeof "") {
-            console.log("Translation x was not filled out");
-            return;
-        }
-        transx = Number(transx);
-        if (!Number.isInteger(transx)) {
-            console.log("Translation x was not an integer");
-            return;
-        };
-        if (!(minx <= transx <= maxx)) {
-            console.log("Translation x would put it out of bounds. Acceptable range: " + minx + " - " + maxx);
-            return;
-        }
-        translation[0] = translation[0] + transx;
-        var transy = window.prompt("Insert y translation (must be an integer)\nBetween " + miny + " - " + maxy);
-        if (typeof transy !== typeof "") {
-            console.log("Translation y was blank");
-            return;
-        }
-        transy = Number(transy);
-        if (!Number.isInteger(transy)) {
-            console.log("translation y was not an integer");
-            return;
-        }
-        if (!(miny <= transy <= maxy)) {
-            console.log("That translation would put it out of bounds. Acceptable range: " + miny + " - " + maxy);
-            return;
-        }
-        translation[1] = translation[1] + transy;
-        drawScene()
-    }
 
     function drawScene() {
         webglUtils.resizeCanvasToDisplaySize(gl.canvas);
@@ -127,7 +89,7 @@ function main() {
         gl.enableVertexAttribArray(positionLocation);
         gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
 
-        var size = 2;
+        var size = 3;
         var type = gl.FLOAT;
         var normalize = false;
         var stride = 0;
@@ -135,13 +97,10 @@ function main() {
         gl.vertexAttribPointer(positionLocation, size, type, normalize, stride, offset);
         gl.uniform2f(resolutionLocation, gl.canvas.width, gl.canvas.height);
         gl.uniform4fv(colorLocation, color);
-        var projM = m3.projection(gl.canvas.clientWidth, gl.canvas.clientHeight)
-        var transM = m3.translation(translation[0], translation[1]);
-        var rotM = m3.rotation(angle * Math.PI / 180);
-        var scaleM = m3.scaling(scale[0], scale[1]);
-        var matrix = m3.multiply(projM, transM);
-        matrix = m3.multiply(matrix, rotM);
-        matrix = m3.multiply(matrix, scaleM);
+        var matrix = m3.projection(gl.canvas.clientWidth, gl.canvas.clientHeight);
+        matrix = m3.translate(matrix, translation[0], translation[1]);
+        matrix = m3.rotate(matrix, (angle * Math.PI/ 180));
+        matrix = m3.scale(matrix, scale[0], scale[1]);
         gl.uniformMatrix3fv(matrixLocation, false, matrix);
 
         gl.drawArrays(gl.TRIANGLES, 0, 18);
