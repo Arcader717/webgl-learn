@@ -81,7 +81,7 @@ function main() {
         matrix = m4.yRotate(matrix, angle[1]);
         matrix = m4.zRotate(matrix, angle[2]);
         matrix = m4.scale(matrix, scale[0], scale[1], scale[2]);
-        gl.uniformMatrix3fv(matrixLocation, false, matrix);
+        gl.uniformMatrix4fv(matrixLocation, false, matrix);
 
         gl.drawArrays(gl.TRIANGLES, 0, 18);
         logValues(translation, angle, scale);
