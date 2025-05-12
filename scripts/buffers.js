@@ -19,7 +19,7 @@ function setColors(gl/*, data*/) {
   const color2 = get3DRectColors(colors);
   const color3 = get3DRectColors(colors);
   var colorBuffer = color1.concat(color2, color3);
-  gl.bufferData(gl.ARRAY_BUFFER, new UInt8Array(colorBuffer), gl.STATIC_DRAW);
+  gl.bufferData(gl.ARRAY_BUFFER, new Uint8Array(colorBuffer), gl.STATIC_DRAW);
 }
 
 function get3DRectColors(color) {
