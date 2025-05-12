@@ -62,6 +62,8 @@ function main() {
     function keydownCon(e) {
         if (e.key == "r") {
             askRotation();
+        } else if (e.key == "t") {
+            askTranslation();
         }
     }
 
@@ -75,6 +77,28 @@ function main() {
         angle = [x, y, z];
         drawScene();
     };
+
+    function askTranslation() {
+        var x = window.prompt("Desired X translation");
+        var y = window.prompt("Desired Y translation");
+        var z = window.prompt("Desired Z translation");
+        if (x == "") { x = translation[0] };
+        if (y == "") { y = translation[1] };
+        if (z == "") { z = translation[2] };
+        translation = [x, y, z];
+        drawScene();
+    }
+
+    function askScale() {
+        var x = window.prompt("Desired X scale");
+        var y = window.prompt("Desired Y scale");
+        var z = window.prompt("Desired Z scale");
+        if (x == "") { x = scale[0] };
+        if (y == "") { y = scale[1] };
+        if (z == "") { z = scale[2] };
+        angle = [x, y, z];
+        drawScene();
+    }
 
     function drawScene() {
         webglUtils.resizeCanvasToDisplaySize(gl.canvas);
