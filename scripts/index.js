@@ -127,8 +127,14 @@ function main() {
         var stride = 0;
         var offset = 0;
         gl.vertexAttribPointer(colorLocation, size, type, normalize, stride, offset);
-        
-        var matrix = m4.projection(gl.canvas.clientWidth, gl.canvas.clientHeight, 400);
+
+        var left = 0;
+        var right = gl.canvas.clientWidth;
+        var bottom = gl.canvas.clientHeight;
+        var top = 0;
+        var near = 400;
+        var far = -400;
+        var matrix = m4.ortho(left, right, bottom, top, near, far);
         matrix = m4.translate(matrix, translation[0], translation[1], translation[2]);
         matrix = m4.xRotate(matrix, angle[0]);
         matrix = m4.yRotate(matrix, angle[1]);
