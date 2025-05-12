@@ -138,8 +138,8 @@ function get3DRectangle(x, y, z) { // first example
     x2, y2, z1,
     x2, y1, z2,
     x2, y1, z2,
-    x2, y2, z1,
     x2, y2, z2,
+    x2, y2, z1,
   ];
 }
 
