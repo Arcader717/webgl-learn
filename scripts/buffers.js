@@ -119,11 +119,11 @@ function get3DRectangle(x, y, z) { // first example
 
     // bottom
     x1, y2, z1,
-    x2, y2, z1,
-    x1, y2, z2,
     x1, y2, z2,
     x2, y2, z1,
+    x1, y2, z2,
     x2, y2, z2,
+    x2, y2, z1,
 
     // left
     x1, y1, z1,
