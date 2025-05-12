@@ -9,11 +9,17 @@ const vShader = `
     attribute vec4 a_color;
     
     uniform mat4 u_matrix;
+    uniform float u_fudge;
 
     varying vec4 v_color;
 
     void main() {
-        gl_Position = u_matrix * a_position;
+        vec4 position = u_matrix * a_position;
+
+        float zDivide = 1.0 + position.z * u_fudge;
+
+        gl_Position = vec4(position.xy / zDivide, position.zw);
+        
         v_color = a_color;
     }
 `;
@@ -40,6 +46,7 @@ function main() {
     var positionLocation = gl.getAttribLocation(program, "a_position");
     var colorLocation = gl.getAttribLocation(program, "a_color");
     
+    var fudgeLocation = gl.getUniformLocation(program, "u_fudge");
     var matrixLocation = gl.getUniformLocation(program, "u_matrix");
 
     var positionBuffer = gl.createBuffer();
@@ -53,6 +60,7 @@ function main() {
     var translation = [45, 150, 0];
     var angle = [40, 25, 325];
     var scale = [1, 1, 1];
+    var fudge = 1;
     var color = [Math.random(), Math.random(), Math.random(), 1];
     
     drawScene();
@@ -141,6 +149,7 @@ function main() {
         matrix = m4.zRotate(matrix, angle[2]);
         matrix = m4.scale(matrix, scale[0], scale[1], scale[2]);
         gl.uniformMatrix4fv(matrixLocation, false, matrix);
+        gl.uniform1f(fudgeLocation, fudge);
 
         gl.drawArrays(gl.TRIANGLES, 0, 18*6);
         logValues(translation, angle, scale);
