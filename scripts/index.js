@@ -82,7 +82,7 @@ function main() {
         matrix = m4.scale(matrix, scale[0], scale[1], scale[2]);
         gl.uniformMatrix4fv(matrixLocation, false, matrix);
 
-        gl.drawArrays(gl.TRIANGLES, 0, 16*6);
+        gl.drawArrays(gl.TRIANGLES, 0, 18*6);
         logValues(translation, angle, scale);
     }
 }
