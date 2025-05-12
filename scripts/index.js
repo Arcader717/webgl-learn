@@ -64,6 +64,8 @@ function main() {
             askRotation();
         } else if (e.key == "t") {
             askTranslation();
+        } else if (e.key == "s") {
+            askScale()
         }
     }
 
@@ -96,7 +98,7 @@ function main() {
         if (x == "") { x = scale[0] };
         if (y == "") { y = scale[1] };
         if (z == "") { z = scale[2] };
-        angle = [x, y, z];
+        scale = [x, y, z];
         drawScene();
     }
 
