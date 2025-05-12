@@ -57,10 +57,10 @@ function main() {
     gl.bindBuffer(gl.ARRAY_BUFFER, colorBuffer);
     setColors(gl);
 
-    var translation = [45, 150, 0];
+    var translation = [-150, 0, -360];
     var angle = [40, 25, 325];
     var scale = [1, 1, 1];
-    var fudge = 1;
+    var fov = 60;
     var color = [Math.random(), Math.random(), Math.random(), 1];
     
     drawScene();
@@ -74,6 +74,8 @@ function main() {
             askTranslation();
         } else if (e.key == "s") {
             askScale()
+        } else if (e.key == "f") {
+            askFOV();
         }
     }
 
@@ -110,6 +112,11 @@ function main() {
         drawScene();
     }
 
+    function askFOV() {
+        var f = window.prompt("Desired FOV");
+        
+    }
+
     function drawScene() {
         webglUtils.resizeCanvasToDisplaySize(gl.canvas);
         gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
@@ -136,13 +143,10 @@ function main() {
         var offset = 0;
         gl.vertexAttribPointer(colorLocation, size, type, normalize, stride, offset);
 
-        var left = 0;
-        var right = gl.canvas.clientWidth;
-        var bottom = gl.canvas.clientHeight;
-        var top = 0;
-        var near = 400;
-        var far = -400;
-        var matrix = m4.ortho(left, right, bottom, top, near, far);
+        var aspect = gl.canvas.clientWidth / gl.canvas.clientHeight;
+        var zNear = 1;
+        var zFar = 2000;
+        var matrix = m4.perspective(aspect, zNear, zFar );
         matrix = m4.translate(matrix, translation[0], translation[1], translation[2]);
         matrix = m4.xRotate(matrix, angle[0]);
         matrix = m4.yRotate(matrix, angle[1]);
