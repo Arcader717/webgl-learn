@@ -43,7 +43,7 @@ function main() {
     setGeometry(gl);
 
     var translation = [45, 150, 0];
-    var angle = [0, 0, 0];
+    var angle = [40, 25, 325];
     var scale = [1, 1, 1];
     var color = [Math.random(), Math.random(), Math.random(), 1];
     
