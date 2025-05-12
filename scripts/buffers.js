@@ -22,7 +22,7 @@ function setColors(gl/*, data*/) {
   gl.bufferData(gl.ARRAY_BUFFER, new UInt8Array(colorBuffer), gl.STATIC_DRAW);
 }
 
-function get3DRectColors(colors) {
+function get3DRectColors(color) {
   var f = color[0]; // front
   var b = color[1]; // back
   var t = color[2]; // top
