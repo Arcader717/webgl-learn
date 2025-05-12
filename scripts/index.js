@@ -57,15 +57,24 @@ function main() {
     
     drawScene();
 
-    /*window.addEventListener("keydown", keydownCon);
+    window.addEventListener("keydown", keydownCon);
 
     function keydownCon(e) {
         if (e.key == "r") {
-            resetF();  
-        } else if (e.key == "t") {
-            promptTranslation();
+            askRotation();
         }
-    }*/
+    }
+
+    function askRotation() {
+        var x = window.prompt("Desired X rotation");
+        var y = window.prompt("Desired Y rotation");
+        var z = window.prompt("Desired Z rotation");
+        if (x == "") { x = angle[0] };
+        if (y == "") { y = angle[1] };
+        if (z == "") { z = angle[2] };
+        angle = [x, y, z];
+        drawScene();
+    };
 
     function drawScene() {
         webglUtils.resizeCanvasToDisplaySize(gl.canvas);
