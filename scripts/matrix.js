@@ -79,7 +79,8 @@ var m3 = {
 };
 
 var m4 = {
-  perspective: function(fovRads, aspect, near, far) {
+  perspective: function(fov, aspect, near, far) {
+    var fovRads = fov * Math.PI / 180
     var f = Math.tan(Math.PI * 0.5 - 0.5 * fovRads);
     var rangeInv = 1.0 / (near - far);
 
