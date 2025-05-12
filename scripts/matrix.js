@@ -143,13 +143,16 @@ var m4 = {
     return m4.multiply(m, m4.translation(tx, ty, tz));
   },
 
-  xRotate: function(m, angleRads) {
+  xRotate: function(m, angle) {
+    var angleRads = angle * Math.PI / 180
     return m4.multiply(m, m4.xRotation(angleRads));
   },
-  yRotate: function(m, angleRads) {
+  yRotate: function(m, angle) {
+    var angleRads = angle * Math.PI / 180
     return m4.multiply(m, m4.yRotation(angleRads));
   },
-  zRotate: function(m, angleRads) {
+  zRotate: function(m, angle) {
+    var angleRads = angle * Math.PI / 180
     return m4.multiply(m, m4.zRotation(angleRads));
   },
   scale: function(m, sx, sy, sz) {
