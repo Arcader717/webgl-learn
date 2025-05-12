@@ -1,23 +1,27 @@
 import { makeProgram } from "./boilerplate.js";
-import { setGeometry } from "./buffers.js";
+import { setGeometry, setColors } from "./buffers.js";
 import { m4 } from "./matrix.js";
 
 var color = [0, 0, 0, 1];
 
 const vShader = `
     attribute vec4 a_position;
+    attribute vec4 a_color;
     
     uniform mat4 u_matrix;
 
+    varying vec4 v_color;
+
     void main() {
         gl_Position = u_matrix * a_position;
+        v_color = a_color;
     }
 `;
 const fShader = `
     precision mediump float;
-    uniform vec4 u_color;
+    varying vec4 v_color;
     void main() {
-        gl_FragColor = u_color;
+        gl_FragColor = v_color;
     }
 `;
 
@@ -34,13 +38,17 @@ function main() {
     gl.useProgram(program);
     
     var positionLocation = gl.getAttribLocation(program, "a_position");
-
-    var colorLocation = gl.getUniformLocation(program, "u_color");
+    var colorLocation = gl.getAttribLocation(program, "a_color");
+    
     var matrixLocation = gl.getUniformLocation(program, "u_matrix");
 
     var positionBuffer = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
     setGeometry(gl);
+
+    var colorBuffer = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, colorBuffer);
+    setColors(gl);
 
     var translation = [45, 150, 0];
     var angle = [40, 25, 325];
@@ -64,16 +72,25 @@ function main() {
         gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
         gl.clear(gl.COLOR_BUFFER_BIT);
         gl.useProgram(program);
+        
         gl.enableVertexAttribArray(positionLocation);
         gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
-
         var size = 3;
         var type = gl.FLOAT;
         var normalize = false;
         var stride = 0;
         var offset = 0;
         gl.vertexAttribPointer(positionLocation, size, type, normalize, stride, offset);
-        gl.uniform4fv(colorLocation, color);
+        
+        gl.enableVertexAttribArray(colorLocation);
+        gl.bindBuffer(gl.ARRAY_BUFFER, colorBuffer);
+        var size = 3;
+        var type = gl.UNSIGNED_BYTE;
+        var normalize = true;
+        var stride = 0;
+        var offset = 0;
+        gl.vertexAttribPointer(colorLocation, size, type, normalize, stride, offset);
+        
         var matrix = m4.projection(gl.canvas.clientWidth, gl.canvas.clientHeight, 400);
         matrix = m4.translate(matrix, translation[0], translation[1], translation[2]);
         matrix = m4.xRotate(matrix, angle[0]);
